@@ -34,9 +34,6 @@ func (s *ParkingSimulator) simularVehiculo(id int, r *rand.Rand) {
 
 func (s *ParkingSimulator) IniciarSimulacion() {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-
-	fmt.Println("🅿️  Iniciando simulación del estacionamiento")
-
 	lambda := 0.9
 	for i := 0; i < config.TOTAL_VEHICULOS; i++ {
 		s.wg.Add(1)
@@ -46,5 +43,5 @@ func (s *ParkingSimulator) IniciarSimulacion() {
 	}
 
 	s.wg.Wait()
-	fmt.Println("✨ Simulación completada")
+	fmt.Println("✨ Estacionamiento vácio YIPPIE ✨")
 }

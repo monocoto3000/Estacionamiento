@@ -24,7 +24,7 @@ type VehiculoEspera struct {
 type Estacionamiento struct {
 	Espacios          []bool
 	Ocupados          int
-	DireccionActual   Direccion
+	EstadoPuerta   Direccion
 	VehiculosEnPuerta int
 	Mutex             sync.Mutex
 	EsperaEntrada     *sync.Cond
