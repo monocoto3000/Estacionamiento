@@ -67,8 +67,7 @@ func (s *ParkingService) EntrarVehiculo(id int) int {
 		vehiculo := models.VehiculoEspera{ID: id, Timestamp: time.Now()}
 		elemento := s.estacionamiento.ColaEntrada.PushBack(vehiculo)
 		fmt.Printf("🚗 Vehículo %d agregado a la cola de entrada (posición: %d)\n", id, s.estacionamiento.ColaEntrada.Len())
-		for s.estacionamiento.Ocupados >= config.TOTAL_ESPACIOS ||
-			elemento != s.estacionamiento.ColaEntrada.Front() {
+		for s.estacionamiento.Ocupados >= config.TOTAL_ESPACIOS || elemento != s.estacionamiento.ColaEntrada.Front() {
 			s.estacionamiento.EsperaEntrada.Wait()
 		}
 		s.estacionamiento.ColaEntrada.Remove(elemento)
@@ -118,11 +117,8 @@ func (s *ParkingService) SalirVehiculo(id int, espacio int) {
 	if s.estacionamiento.ColaSalida.Len() > 0 || (s.estacionamiento.VehiculosEnPuerta > 0 && s.estacionamiento.DireccionActual == models.ENTRANDO) {
 		vehiculo := models.VehiculoEspera{ID: id, Timestamp: time.Now()}
 		elemento := s.estacionamiento.ColaSalida.PushBack(vehiculo)
-		fmt.Printf("🚗 Vehículo %d agregado a la cola de salida (posición: %d)\n",
-			id, s.estacionamiento.ColaSalida.Len())
-
-		for elemento != s.estacionamiento.ColaSalida.Front() ||
-			(s.estacionamiento.VehiculosEnPuerta > 0 && s.estacionamiento.DireccionActual == models.ENTRANDO) {
+		fmt.Printf("🚗 Vehículo %d agregado a la cola de salida (posición: %d)\n", id, s.estacionamiento.ColaSalida.Len())
+		for elemento != s.estacionamiento.ColaSalida.Front() || (s.estacionamiento.VehiculosEnPuerta > 0 && s.estacionamiento.DireccionActual == models.ENTRANDO) {
 			s.estacionamiento.EsperaSalida.Wait()
 		}
 		s.estacionamiento.ColaSalida.Remove(elemento)

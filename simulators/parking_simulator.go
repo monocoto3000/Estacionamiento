@@ -37,7 +37,7 @@ func (s *ParkingSimulator) IniciarSimulacion() {
 
 	fmt.Println("🅿️  Iniciando simulación del estacionamiento")
 
-	lambda := 0.5 
+	lambda := 0.9
 	for i := 0; i < config.TOTAL_VEHICULOS; i++ {
 		s.wg.Add(1)
 		tiempoEspera := r.ExpFloat64() / lambda
