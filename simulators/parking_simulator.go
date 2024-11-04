@@ -33,15 +33,22 @@ func (s *ParkingSimulator) simularVehiculo(id int, r *rand.Rand) {
 }
 
 func (s *ParkingSimulator) IniciarSimulacion() {
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	lambda := 0.9
 	for i := 0; i < config.TOTAL_VEHICULOS; i++ {
 		s.wg.Add(1)
-		tiempoEspera := r.ExpFloat64() / lambda
-		time.Sleep(time.Duration(tiempoEspera * float64(time.Second)))
+		time.Sleep(2 * time.Second)
 		go s.simularVehiculo(i, rand.New(rand.NewSource(time.Now().UnixNano())))
 	}
-
 	s.wg.Wait()
 	fmt.Println("✨ Estacionamiento vácio YIPPIE ✨")
 }
+
+// Con distribución de Poisson D:
+	// r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	// lambda := 0.1
+	// for i := 0; i < config.TOTAL_VEHICULOS; i++ {
+	// 	s.wg.Add(1)
+	// 	tiempoEspera := r.ExpFloat64() / lambda
+	// 	time.Sleep(time.Duration(tiempoEspera * float64(time.Second)))
+	// 	go s.simularVehiculo(i, rand.New(rand.NewSource(time.Now().UnixNano())))
+	// }
+	// s.wg.Wait()

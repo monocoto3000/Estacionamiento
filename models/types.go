@@ -4,7 +4,6 @@ import (
 	"container/list"
 	"sync"
 	"time"
-
 	"fyne.io/fyne/v2/canvas"
 )
 
@@ -24,7 +23,7 @@ type VehiculoEspera struct {
 type Estacionamiento struct {
 	Espacios          []bool
 	Ocupados          int
-	EstadoPuerta   Direccion
+	EstadoPuerta   	  Direccion
 	VehiculosEnPuerta int
 	Mutex             sync.Mutex
 	EsperaEntrada     *sync.Cond

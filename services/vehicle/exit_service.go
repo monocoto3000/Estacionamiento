@@ -1,4 +1,4 @@
-package services
+package vehicle
 
 import (
 	"fmt"
@@ -6,14 +6,15 @@ import (
 	"fyne.io/fyne/v2/theme"
 	"estacionamiento/config"
 	"estacionamiento/models"
+	"estacionamiento/services/door"
 )
 
 type SalidaService struct {
 	estacionamiento *models.Estacionamiento
-	doorService    *DoorService
+	doorService    *door.DoorService
 }
 
-func NewSalidaService(estacionamiento *models.Estacionamiento, doorService *DoorService) *SalidaService {
+func NewSalidaService(estacionamiento *models.Estacionamiento, doorService *door.DoorService) *SalidaService {
 	return &SalidaService{
 		estacionamiento: estacionamiento,
 		doorService:     doorService,

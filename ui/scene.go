@@ -4,10 +4,8 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/theme"
-	"estacionamiento/config"
+	"fyne.io/fyne/v2/widget"
 	"estacionamiento/services"
 	"image/color"
 	"strconv"
@@ -31,6 +29,16 @@ func NewParkingUI(service *services.ParkingService) *ParkingUI {
 		carrosEntrada: make([]*canvas.Rectangle, 0),
 		carrosSalida:  make([]*canvas.Rectangle, 0),
 	}
+}
+
+func (ui *ParkingUI) Setup() {
+	a := app.New()
+	ui.window = a.NewWindow("Simulación Estacionamiento :D")
+
+	SetupView(ui)
+
+	ui.window.Resize(fyne.NewSize(800, 500))
+	go ui.actualizarUI()
 }
 
 func (ui *ParkingUI) actualizarCarrosEnCola(cantidad int, esEntrada bool) {
@@ -68,59 +76,6 @@ func (ui *ParkingUI) actualizarCarrosEnCola(cantidad int, esEntrada bool) {
 	}
 	
 	(*contenedor).Refresh()
-}
-
-
-func (ui *ParkingUI) Setup() {
-	a := app.New()
-	ui.window = a.NewWindow("Simulación Estacionamiento")
-
-	ui.colaEntradaLabel = widget.NewLabel("Cola de Entrada: 0")
-	ui.colaSalidaLabel = widget.NewLabel("Cola de Salida: 0")
-
-	ui.contenedorEntrada = container.NewHBox()
-	ui.contenedorSalida = container.NewHBox()
-
-	ui.service.GetEstacionamiento().Puerta.SetMinSize(fyne.NewSize(100, 30))
-
-	for i := 0; i < config.TOTAL_ESPACIOS; i++ {
-		espacio := canvas.NewRectangle(theme.BackgroundColor())
-		espacio.SetMinSize(fyne.NewSize(100, 100))
-		ui.service.GetEstacionamiento().EspaciosCanvas = append(ui.service.GetEstacionamiento().EspaciosCanvas, espacio)
-	}
-
-	var canvasObjects []fyne.CanvasObject
-	for _, espacio := range ui.service.GetEstacionamiento().EspaciosCanvas {
-		canvasObjects = append(canvasObjects, espacio)
-	}
-	espaciosGrid := container.NewGridWithColumns(5, canvasObjects...)
-
-	colaEntradaContainer := container.NewVBox(
-		ui.colaEntradaLabel,
-		ui.contenedorEntrada,
-	)
-	colaSalidaContainer := container.NewVBox(
-		ui.colaSalidaLabel,
-		ui.contenedorSalida,
-	)
-
-	colasContainer := container.NewHBox(
-		colaEntradaContainer,
-		widget.NewSeparator(),
-		colaSalidaContainer,
-	)
-
-	puertaContainer := container.NewVBox(ui.service.GetEstacionamiento().Puerta)
-	layout := container.NewVBox(
-		colasContainer,
-		puertaContainer,
-		espaciosGrid,
-	)
-
-	ui.window.SetContent(layout)
-	ui.window.Resize(fyne.NewSize(800, 500))
-
-	go ui.actualizarUI()
 }
 
 func (ui *ParkingUI) actualizarUI() {

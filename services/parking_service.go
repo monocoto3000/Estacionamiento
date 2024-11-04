@@ -8,13 +8,15 @@ import (
 	"fyne.io/fyne/v2/theme"
 	"estacionamiento/config"
 	"estacionamiento/models"
+	"estacionamiento/services/door"
+    "estacionamiento/services/vehicle"
 )
 
 type ParkingService struct {
 	estacionamiento *models.Estacionamiento
-	entradaService *EntradaService
-	salidaService  *SalidaService
-	doorService    *DoorService
+	entradaService  *vehicle.EntradaService
+	salidaService   *vehicle.SalidaService
+	doorService     *door.DoorService
 }
 
 func NewParkingService(app fyne.App) *ParkingService {
@@ -28,15 +30,15 @@ func NewParkingService(app fyne.App) *ParkingService {
 	e.EsperaEntrada = sync.NewCond(&e.Mutex)
 	e.EsperaSalida = sync.NewCond(&e.Mutex)
 
-	doorService := NewDoorService(e)
+	doorService := door.NewDoorService(e)
 	
 	service := &ParkingService{
 		estacionamiento: e,
 		doorService:     doorService,
 	}
 	
-	service.entradaService = NewEntradaService(e, doorService)
-	service.salidaService = NewSalidaService(e, doorService)
+	service.entradaService = vehicle.NewEntradaService(e, doorService)
+	service.salidaService = vehicle.NewSalidaService(e, doorService)
 	
 	return service
 }
