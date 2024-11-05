@@ -35,7 +35,6 @@ func (s *SalidaService) SalirVehiculo(id int) {
     }
 
     for s.estacionamiento.ColaEntrada.Len() > 0 && s.estacionamiento.Ocupados < config.TOTAL_ESPACIOS {
-        fmt.Printf("🚗 Vehículo %d esperando, dando prioridad a la entrada\n", id)
         s.estacionamiento.EsperaEntrada.Broadcast()
         s.estacionamiento.EsperaSalida.Wait()
     }
