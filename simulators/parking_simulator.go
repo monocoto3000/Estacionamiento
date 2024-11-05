@@ -26,7 +26,7 @@ func (s *ParkingSimulator) simularVehiculo(id int, r *rand.Rand) {
 	espacio := s.service.EntrarVehiculo(id)
 	if espacio != -1 {
 		tiempoEstacionado := config.MIN_TIEMPO_ESTAC + r.Float64()*(config.MAX_TIEMPO_ESTAC-config.MIN_TIEMPO_ESTAC)
-		fmt.Printf("🕐 Vehículo %d estacionado por %.2f segundos\n", id, tiempoEstacionado)
+		// fmt.Printf("Vehículo %d estacionado por %.2f segundos\n", id, tiempoEstacionado)
 		time.Sleep(time.Duration(tiempoEstacionado * float64(time.Second)))
 		s.service.LiberarEspacio(id, espacio)
 		s.service.SalirVehiculo(id)

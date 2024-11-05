@@ -26,7 +26,7 @@ func (s *FreeSpaceService) LiberarEspacio(id int, espacio int) {
 
     s.estacionamiento.Espacios[espacio] = false
     s.estacionamiento.Ocupados--
-    fmt.Printf("🚙 !!!!!!!!!!!! Vehículo %d liberó el espacio %d\n", id, espacio)
+    fmt.Printf("Vehículo %d liberó el espacio %d\n", id, espacio)
 
     if s.estacionamiento.ColaEntrada.Len() > 0 {
         s.estacionamiento.EsperaEntrada.Broadcast()

@@ -24,11 +24,12 @@ func NewEntradaService(estacionamiento *models.Estacionamiento, doorService *doo
 func (s *EntradaService) EntrarVehiculo(id int) int {
 	s.estacionamiento.Mutex.Lock()
 	defer s.estacionamiento.Mutex.Unlock()
+	fmt.Print("LUGARES OCUPADOS: ", s.estacionamiento.Ocupados)
 
 	if s.estacionamiento.Ocupados >= config.TOTAL_ESPACIOS || s.estacionamiento.ColaEntrada.Len() > 0 {
-		vehiculo := models.VehiculoEspera{ID: id, Timestamp: time.Now()}
+		vehiculo := models.VehiculoEspera{ID: id}
 		elemento := s.estacionamiento.ColaEntrada.PushBack(vehiculo)
-		fmt.Printf("🚗 Vehículo %d agregado a la cola de entrada (posición: %d)\n", id, s.estacionamiento.ColaEntrada.Len())
+		fmt.Printf("--- Vehículo %d agregado a la cola de entrada (pos: %d)\n", id, s.estacionamiento.ColaEntrada.Len())
 		for s.estacionamiento.Ocupados >= config.TOTAL_ESPACIOS || elemento != s.estacionamiento.ColaEntrada.Front() {
 			s.estacionamiento.EsperaEntrada.Wait()
 		}
@@ -36,14 +37,14 @@ func (s *EntradaService) EntrarVehiculo(id int) int {
 	}
 
 	for s.estacionamiento.VehiculosEnPuerta > 0 && s.estacionamiento.EstadoPuerta == models.SALIENDO {
-		s.doorService.MostrarEstadoPuerta(id, "🕐 Esperando para entrar")
+		s.doorService.MostrarEstadoPuerta(id, "Esperando para entrar")
 		s.estacionamiento.EsperaEntrada.Wait()
 	}
 
 	s.estacionamiento.VehiculosEnPuerta++
 	s.estacionamiento.EstadoPuerta = models.ENTRANDO
 	s.doorService.ActualizarPuerta()
-	s.doorService.MostrarEstadoPuerta(id, "🚪 Entrando")
+	s.doorService.MostrarEstadoPuerta(id, "// Entrando //")
 
 	time.Sleep(time.Duration((config.TIEMPO_PUERTA_ENTRADA) * time.Millisecond))
 
@@ -55,7 +56,7 @@ func (s *EntradaService) EntrarVehiculo(id int) int {
 		s.doorService.ActualizarPuerta()
 		s.estacionamiento.EsperaSalida.Broadcast()
 	}
-	s.doorService.MostrarEstadoPuerta(id, "✅ Terminó de entrar")
+	s.doorService.MostrarEstadoPuerta(id, "--- Terminó de entrar ---")
 
 	return espacioAsignado
 }

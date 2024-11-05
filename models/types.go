@@ -3,7 +3,6 @@ package models
 import (
 	"container/list"
 	"sync"
-	"time"
 	"fyne.io/fyne/v2/canvas"
 )
 
@@ -17,7 +16,6 @@ const (
 
 type VehiculoEspera struct {
 	ID        int
-	Timestamp time.Time
 }
 
 type Estacionamiento struct {
