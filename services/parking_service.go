@@ -17,6 +17,7 @@ type ParkingService struct {
 	entradaService  *vehicle.EntradaService
 	salidaService   *vehicle.SalidaService
 	doorService     *door.DoorService
+	freeSalida      *vehicle.FreeSpaceService
 }
 
 func NewParkingService(app fyne.App) *ParkingService {
@@ -39,6 +40,7 @@ func NewParkingService(app fyne.App) *ParkingService {
 	
 	service.entradaService = vehicle.NewEntradaService(e, doorService)
 	service.salidaService = vehicle.NewSalidaService(e, doorService)
+	service.freeSalida = vehicle.NewFreeSpaceService(e)
 	
 	return service
 }
@@ -47,8 +49,12 @@ func (s *ParkingService) EntrarVehiculo(id int) int {
 	return s.entradaService.EntrarVehiculo(id)
 }
 
-func (s *ParkingService) SalirVehiculo(id int, espacio int) {
-	s.salidaService.SalirVehiculo(id, espacio)
+func (s *ParkingService) LiberarEspacio(id int, espacio int) {
+	s.freeSalida.LiberarEspacio(id, espacio)
+}
+
+func (s *ParkingService) SalirVehiculo(id int) {
+	s.salidaService.SalirVehiculo(id)
 }
 
 // Interfaz D:

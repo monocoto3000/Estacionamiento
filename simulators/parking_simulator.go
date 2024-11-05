@@ -28,14 +28,15 @@ func (s *ParkingSimulator) simularVehiculo(id int, r *rand.Rand) {
 		tiempoEstacionado := config.MIN_TIEMPO_ESTAC + r.Float64()*(config.MAX_TIEMPO_ESTAC-config.MIN_TIEMPO_ESTAC)
 		fmt.Printf("🕐 Vehículo %d estacionado por %.2f segundos\n", id, tiempoEstacionado)
 		time.Sleep(time.Duration(tiempoEstacionado * float64(time.Second)))
-		s.service.SalirVehiculo(id, espacio)
+		s.service.LiberarEspacio(id, espacio)
+		s.service.SalirVehiculo(id)
 	}
 }
 
 func (s *ParkingSimulator) IniciarSimulacion() {
 	for i := 0; i < config.TOTAL_VEHICULOS; i++ {
 		s.wg.Add(1)
-		time.Sleep(2 * time.Second)
+		time.Sleep(1 * time.Second)
 		go s.simularVehiculo(i, rand.New(rand.NewSource(time.Now().UnixNano())))
 	}
 	s.wg.Wait()
