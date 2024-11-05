@@ -3,7 +3,7 @@ package vehicle
 import (
 	"fmt"
 	"time"
-	"fyne.io/fyne/v2/theme"
+	// "fyne.io/fyne/v2/theme"
 	"estacionamiento/config"
 	"estacionamiento/models"
 	"estacionamiento/services/door"
@@ -69,7 +69,7 @@ func (s *SalidaService) SalirVehiculo(id int, espacio int) {
 func (s *SalidaService) liberarEspacio(id int, espacio int) {
 	s.estacionamiento.Espacios[espacio] = false
 	s.estacionamiento.Ocupados--
-	s.estacionamiento.EspaciosCanvas[espacio].FillColor = theme.BackgroundColor()
-	s.estacionamiento.EspaciosCanvas[espacio].Refresh()
+	// s.estacionamiento.EspaciosCanvas[espacio].FillColor = theme.BackgroundColor()
+	// s.estacionamiento.EspaciosCanvas[espacio].Refresh()
 	fmt.Printf("🚙 Vehículo %d saliendo del cajón %d\n", id, espacio)
 }

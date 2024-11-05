@@ -3,7 +3,7 @@ package vehicle
 import (
 	"fmt"
 	"time"
-	"fyne.io/fyne/v2/theme"
+	// "fyne.io/fyne/v2/theme"
 	"estacionamiento/config"
 	"estacionamiento/models"
 	"estacionamiento/services/door"
@@ -67,8 +67,8 @@ func (s *EntradaService) asignarEspacio(id int) int {
 			s.estacionamiento.Espacios[i] = true
 			espacioAsignado = i
 			s.estacionamiento.Ocupados++
-			s.estacionamiento.EspaciosCanvas[i].FillColor = theme.PrimaryColor()
-			s.estacionamiento.EspaciosCanvas[i].Refresh()
+			// s.estacionamiento.EspaciosCanvas[i].FillColor = theme.PrimaryColor()
+			// s.estacionamiento.EspaciosCanvas[i].Refresh()
 			break
 		}
 	}
