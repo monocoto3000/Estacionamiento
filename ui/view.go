@@ -13,8 +13,8 @@ func SetupView(ui *ParkingUI) {
 	ui.colaEntradaLabel = widget.NewLabel("Cola de Entrada: 0")
 	ui.colaSalidaLabel = widget.NewLabel("Cola de Salida: 0")
 
-	ui.contenedorEntrada = container.NewHBox()
-	ui.contenedorSalida = container.NewHBox()
+	ui.contenedorEntrada = container.NewGridWrap(fyne.NewSize(30, 30)) 
+	ui.contenedorSalida = container.NewGridWrap(fyne.NewSize(30, 30))  
 
 	ui.service.GetEstacionamiento().Puerta.SetMinSize(fyne.NewSize(50, 30))
 

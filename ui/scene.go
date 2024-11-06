@@ -41,31 +41,31 @@ func (ui *ParkingUI) Setup() {
     go ui.actualizarUI()
 }
 
-// func (ui *ParkingUI) actualizarCarrosEnColaEntrada() {
-//     carros := &ui.carrosEntrada
-//     contenedor := &ui.contenedorEntrada
-//     colorCarro := color.NRGBA{R: 0, G: 200, B: 0, A: 255}
+func (ui *ParkingUI) actualizarCarrosEnColaEntrada() {
+    carros := &ui.carrosEntrada
+    contenedor := &ui.contenedorEntrada
+    colorCarro := color.NRGBA{R: 0, G: 200, B: 0, A: 255}
 
-//     cantidad := ui.service.GetColaEntrada()
-//     cantidadActual := len(*carros)
+    cantidad := ui.service.GetColaEntrada()
+    cantidadActual := len(*carros)
 
-//     if cantidad > cantidadActual {
-//         for i := cantidadActual; i < cantidad; i++ {
-//             carro := canvas.NewRectangle(colorCarro)
-//             carro.Resize(fyne.NewSize(30, 30))
-//             carro.SetMinSize(fyne.NewSize(30, 30))
-//             *carros = append(*carros, carro)
-//             (*contenedor).Add(carro)
-//         }
-//     } else {
-//         for i := cantidadActual - 1; i >= cantidad; i-- {
-//             (*contenedor).Remove((*carros)[i])
-//             *carros = append((*carros)[:i], (*carros)[i+1:]...)
-//         }
-//     }
+    if cantidad > cantidadActual {
+        for i := cantidadActual; i < cantidad; i++ {
+            carro := canvas.NewRectangle(colorCarro)
+            carro.Resize(fyne.NewSize(30, 30))
+            carro.SetMinSize(fyne.NewSize(30, 30))
+            *carros = append(*carros, carro)
+            (*contenedor).Add(carro)
+        }
+    } else {
+        for i := cantidadActual - 1; i >= cantidad; i-- {
+            (*contenedor).Remove((*carros)[i])
+            *carros = append((*carros)[:i], (*carros)[i+1:]...)
+        }
+    }
 
-//     (*contenedor).Refresh()
-// }
+    (*contenedor).Refresh()
+}
 
 func (ui *ParkingUI) actualizarCarrosEnColaSalida() {
     carros := &ui.carrosSalida
@@ -101,7 +101,7 @@ func (ui *ParkingUI) actualizarUI() {
         ui.colaEntradaLabel.SetText("Cola de Entrada: " + strconv.Itoa(colaEntrada))
         ui.colaSalidaLabel.SetText("Cola de Salida: " + strconv.Itoa(colaSalida))
 
-        // ui.actualizarCarrosEnColaEntrada()
+        ui.actualizarCarrosEnColaEntrada()
         ui.actualizarCarrosEnColaSalida()
 
         for i := 0; i < len(ui.service.GetEstacionamiento().Espacios); i++ {

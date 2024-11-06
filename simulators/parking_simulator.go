@@ -36,7 +36,7 @@ func (s *ParkingSimulator) simularVehiculo(id int, r *rand.Rand) {
 func (s *ParkingSimulator) IniciarSimulacion() {
 	for i := 0; i < config.TOTAL_VEHICULOS; i++ {
 		s.wg.Add(1)
-		time.Sleep(1 * time.Second)
+		time.Sleep(2 * time.Second)
 		go s.simularVehiculo(i, rand.New(rand.NewSource(time.Now().UnixNano())))
 	}
 	s.wg.Wait()
