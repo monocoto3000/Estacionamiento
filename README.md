@@ -28,3 +28,7 @@ De igual manera, se tiene como área de mejora la identificación de responsabil
 ## ¿Como usarlo?
 - Compilar: `go run main.go`
 - Instalar dependencias: `go mod tidy`
+  
+![image](https://github.com/user-attachments/assets/e2d344ca-ea48-43eb-a6af-094ba537e973)
+
+  
