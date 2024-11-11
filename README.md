@@ -32,4 +32,8 @@ De igual manera, se tiene como área de mejora la identificación de responsabil
 ## ¿Como se ve?
 ![image](https://github.com/user-attachments/assets/e2d344ca-ea48-43eb-a6af-094ba537e973)
 
+## Más información sobre GO
+![223238 Monica](https://github.com/user-attachments/assets/efc4e9c4-4a82-4bb8-ab7b-c5f06ccf825d)
+
+
   
